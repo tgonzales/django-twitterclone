@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Twitter Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}js/jquery-1.10.1.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="{{ STATIC_URL }}js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="{% url 'home' %}">Twitter Clone</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'login' %}">Login</a></li>
+              <li><a href="{% url 'add-user' %}">Adicionar User</a></li>
+              <li><a href="{% url 'status' %}">Adicionar Status</a></li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav pull-right">
+             <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.email }}<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'logout' %}">Sair - Logout</a></li>
+                  <li><a href="{% url 'add-user' %}">Adicionar User</a></li>
+                  <li><a href="{% url 'status' %}">Adicionar Status</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            {% else %}
+            <form action='{% url 'django.contrib.auth.views.login' %}' class="navbar-form pull-right" method='post'>
+                {% csrf_token %}
+                <input class="span2" name="username" type="text" placeholder="Username">
+                <input class="span2" name="password" type="password" placeholder="Password">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+            {% endif %}
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Example row of columns -->
+      {% block content %}
+
+      <div class="row">
+        <div class="span7">
+          <div class="hero-unit">
+        <h1>Hello, visitante!</h1>
+        <p>Esse é um Twitter Clone feito com o framework Django. Usando Class Based Views, você pode ver esse código
+          no github.</p>
+
+      </div>
+       </div>
+        <div class="span5">
+
+          {% if user.is_authenticated %}
+
+          <h2>Publique !!</h2>
+
+<form action='' method='post'>
+  <input type='hidden' name='csrfmiddlewaretoken' value='qBvRL6Q1BLY7tf50Ph5gWyLchnduBdBD' />
+<table>
+  <tbody>
+    <tr><th><label for="id_status">Status:</label></th><td><input id="id_status" maxlength="140" name="status" type="text" /></td></tr>
+  </tbody>
+</table>
+<input type='submit' class='btn btn-primary' value='Publicar'>
+</form>
+
+          {% else %}
+          <h2>Faça Seu Cadastro</h2>
+          
+<form action='{% url 'add-user' %}' method='post'>
+  <input type='hidden' name='csrfmiddlewaretoken' value='qBvRL6Q1BLY7tf50Ph5gWyLchnduBdBD' />
+<table>
+  <tbody>
+    <tr><th><label for="id_username">Username:</label></th><td><input id="id_username" maxlength="30" name="username" type="text" /><br /></td></tr>
+<tr><th><label for="id_email">Email:</label></th><td><input id="id_email" maxlength="75" name="email" type="text" /></td></tr>
+<tr><th><label for="id_password1">Password:</label></th><td><input id="id_password1" name="password1" type="password" /></td></tr>
+<tr><th><label for="id_password2">Password confirmation:</label></th><td><input id="id_password2" name="password2" type="password" /><br /></td></tr>
+  </tbody>
+</table>
+<input type='submit' class='btn btn-primary' value='Cadastrar'>
+</form>
+
+      {% endif %}
+        </div>
+      </div>
+
+     {% endblock content %}
+    
+      <hr>
+
+      <footer>
+        <p>&copy; FigoTech 2013</p>
+      </footer>
+
+     
+      
+    </div> <!-- /container -->
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script><!--jquery-->
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-dropdown.js"></script><!--dropdown addon-->
+  </body>
+</html>

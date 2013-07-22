@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+      {% block content %}
+
+      <div class="row">
+        <div class="span7">
+          <div class="hero-unit">
+        <h1>Hello, visitante!</h1>
+        <p>Esse é um Twitter Clone feito com o framework Django. Usando Class Based Views, você pode ver esse código
+          no github.</p>
+
+      </div>
+       </div>
+        <div class="span5">
+        	<h2>Cadastra-se!!</h2>
+			<form action='' method='post'>
+				{% csrf_token %}
+			<table>
+				<tbody>
+				{{ form }}
+				</tbody>
+			</table>
+			<input type='submit' value='Cadastrar'>
+			</form>
+        </div>
+      </div>
+
+     {% endblock content %}
